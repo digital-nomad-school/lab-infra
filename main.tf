@@ -40,25 +40,25 @@ resource "digitalocean_vpc" "k8s-vpc" {
 }
 
 data "digitalocean_kubernetes_versions" "prefix" {
-    version_prefix = "1.25."
+  version_prefix = "1.25."
 }
 
 resource "digitalocean_kubernetes_cluster" "mlp" {
-    name = "mlp"
-    region = "fra1"
-    auto_upgrade = true
-    version = data.digitalocean_kubernetes_versions.prefix.latest_version
+  name         = "mlp"
+  region       = "fra1"
+  auto_upgrade = true
+  version      = data.digitalocean_kubernetes_versions.prefix.latest_version
 
-    vpc_uuid = digitalocean_vpc.k8s-vpc.id
+  vpc_uuid = digitalocean_vpc.k8s-vpc.id
 
-    maintenance_policy {
-      start_time = "4:00"
-      day = "sunday"
-    }
+  maintenance_policy {
+    start_time = "4:00"
+    day        = "sunday"
+  }
 
-    node_pool {
-      name = "worker-pool"
-      size = "s-2vcpu-2gb"
-      node_count = 2
-    }
+  node_pool {
+    name       = "worker-pool"
+    size       = "s-2vcpu-2gb"
+    node_count = 2
+  }
 }
