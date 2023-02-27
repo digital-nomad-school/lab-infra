@@ -51,6 +51,8 @@ on:
 
 permissions:
   contents: read
+  pull-requests: write
+  issues: write
 
 jobs:
   terraform:
@@ -124,7 +126,7 @@ jobs:
             repo: context.repo.repo,
             body: output
           })
-          
+
     #Returns whether a plan was successfully generated or not
     - name: Terraform Plan Status
       if: steps.plan.outcome == 'failure'
